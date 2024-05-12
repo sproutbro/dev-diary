@@ -6,10 +6,12 @@ export default defineConfig({
 	plugins: [
 		sveltekit(),
 		basicSsl({
-			
+			/** name of certification */
+			name: 'jackie',
+			/** custom trust domains */
+			domains: ['*.diving.run'],
+			/** custom certification directory */
+			certDir: '/etc/letsencrypt/live/diving.run/'
 		})
-	],
-	server: {
-		certDir: './mkcert'
-	}
+	]
 });
