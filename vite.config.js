@@ -1,17 +1,16 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import basicSsl from '@vitejs/plugin-basic-ssl';
+import fs from 'fs';
 
 export default defineConfig({
 	plugins: [
-		sveltekit(),
-		basicSsl({
-			/** name of certification */
-			name: 'jackie',
-			/** custom trust domains */
-			domains: ['*.diving.run'],
-			/** custom certification directory */
-			certDir: '/etc/letsencrypt/live/diving.run/'
-		})
-	]
+		sveltekit()
+	],
+	server: {
+        https: {
+            key: fs.readFileSync(`${__dirname}/mkcert/key.pem`),
+            cert: fs.readFileSync(`${__dirname}/mkcert/cert.pem`)
+        },
+		proxy: {}
+    }
 });
